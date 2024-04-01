@@ -1,0 +1,57 @@
+@startuml
+
+class CuadriculaIA {
+  -cuadricula: char[][]
+  -numFilas: int
+  -numColumnas: int
+  -barco: Barco
+  +depositarBarco(fila: int, columna: int, barco: Barco): void
+  +getNumFilas(): int
+  +getNumColumnas(): int
+
+}
+
+class Barco {
+  -tamano: int
+  -cuadriculaIA: CuadriculaIA
+  -filaInicial: int
+  -columnaInicial: int
+  -golpeado: boolean
+  -clima: Clima
+  -estrategia: EstrategiaPosicionamiento
+  +Barco(taman: int, cuadriculaIA: CuadriculaIA, filaInicial: int, columnaInicial: int, clima: Clima, estrategia: EstrategiaPosicionamiento)
+  +moverBarco(): void
+}
+
+enum Clima {
+  CALMA
+  TSUNAMI
+  TORMENTA
+  VIENTO_FUERTE
+}
+
+interface EstrategiaPosicionamiento {
+  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+}
+
+class EstrategiaPosicionamientoAleatorio {
+  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+}
+
+class EstrategiaPosicionamientoCentro {
+  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+}
+
+class EstrategiaPosicionamientoEsquina {
+  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+}
+
+Barco --|> IntBarco
+Barco -right- Clima
+Barco -down- EstrategiaPosicionamiento
+CuadriculaIA -left- Barco
+EstrategiaPosicionamientoAleatorio .up.|> EstrategiaPosicionamiento
+EstrategiaPosicionamientoCentro .up.|> EstrategiaPosicionamiento
+EstrategiaPosicionamientoEsquina .up.|> EstrategiaPosicionamiento
+
+@enduml
