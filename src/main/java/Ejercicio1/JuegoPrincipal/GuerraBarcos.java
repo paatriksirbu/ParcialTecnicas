@@ -31,7 +31,7 @@ public class GuerraBarcos {
                 cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
             case 2:
-                FabricaBarcos fabricaBarcos2 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoAleatorio());
+                FabricaBarcos fabricaBarcos2 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoConsecutivo());
                 barco = fabricaBarcos2.crearFrigate();
                 cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
