@@ -7,5 +7,11 @@ public class EstrategiaPosicionamientoConsecutivo implements EstrategiaPosiciona
     @Override
     public void posicionarBarco(CuadriculaIA cuadricula, Barco barco) {
         int filaInicial = barco.getFilaActual();
+        int columnaInicial = barco.getColumnaActual();
+        int tamano = barco.getTamano();
+
+        for(int i = 0; i < tamano; i++) {
+            cuadricula.getCuadricula()[filaInicial][columnaInicial + i] = 'B';
+        }
     }
 }

@@ -2,7 +2,7 @@ package Ejercicio1.JuegoPrincipal;
 import Ejercicio1.Barco.Barco;
 import Ejercicio1.Barco.Clima;
 import Ejercicio1.Cuadricula.CuadriculaIA;
-import Ejercicio1.EstrategiaPosicionamiento.EstrategiaPosicionamientoAleatorio;
+import Ejercicio1.EstrategiaPosicionamiento.*;
 import Ejercicio1.Factory.FabricaBarcos;
 
 import java.util.Scanner;
@@ -26,7 +26,7 @@ public class GuerraBarcos {
         Barco barco = null;
         switch (tipoBarco){
             case 1:
-                FabricaBarcos fabricaBarcos1 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoAleatorio());
+                FabricaBarcos fabricaBarcos1 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoConsecutivo());
                 barco = fabricaBarcos1.crearBattleship();
                 cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
