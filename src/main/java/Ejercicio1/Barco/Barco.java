@@ -16,6 +16,7 @@ public class Barco implements IntBarco{
     private EstrategiaPosicionamiento estrategia;
     private int seccionesGolpeadas = 0;
     private int resistencia;
+    private Orientacion orientacion;
 
 
     public Barco(int tamano, CuadriculaIA cuadriculaIA, int filaInicial, int columnaInicial, Clima clima, EstrategiaPosicionamiento estrategia) {
@@ -142,4 +143,7 @@ public class Barco implements IntBarco{
         return columnaActual;
     }
 
+    public Orientacion getOrientacion() {
+        return orientacion;
+    }
 }
