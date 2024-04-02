@@ -1,0 +1,30 @@
+@startuml
+
+class Puerto {
+    - String nombre
+    + Puerto(String nombre)
+    + String getNombre()
+}
+
+class Arista {
+    - Puerto destino
+    - int distancia
+    + Arista(Puerto destino, int distancia)
+    + Puerto getDestino()
+    + int getDistancia()
+}
+
+class Grafo {
+    - HashMap<Puerto, List<Arista>> grafo
+    + Grafo()
+    + void agregarPuerto(Puerto puerto)
+    + void agregarArista(Puerto origen, Puerto destino, int distancia)
+    + void barridoProfundidad(Puerto puertoInicial)
+    + void caminoMasCorto(Puerto origen, Puerto destino)
+    + void eliminarPuertoConMasAristas()
+}
+
+Puerto <-- Arista : destino
+Grafo "1" *-- "*" Arista : contains
+
+@enduml
