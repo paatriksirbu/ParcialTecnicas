@@ -18,8 +18,8 @@ public class GuerraBarcos {
 
         System.out.println("\n Que tipo de barco quieres crear?");
         System.out.println("1. Barco Battleship (5 casillas)");
-        System.out.println("1. Barco Frigate (3 casillas)");
-        System.out.println("1. Barco Canoe (1 casilla)");
+        System.out.println("2. Barco Frigate (3 casillas)");
+        System.out.println("3. Barco Canoe (1 casilla)");
         Scanner sc = new Scanner(System.in);
         int tipoBarco = sc.nextInt();
 
@@ -27,18 +27,18 @@ public class GuerraBarcos {
         switch (tipoBarco){
             case 1:
                 FabricaBarcos fabricaBarcos1 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoAleatorio());
-                Barco barco1 = fabricaBarcos1.crearBattleship();
-                cuadriculaIA.depositarBarco(3, 3, barco1);
+                barco = fabricaBarcos1.crearBattleship();
+                cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
             case 2:
                 FabricaBarcos fabricaBarcos2 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoAleatorio());
-                Barco barco2 = fabricaBarcos2.crearFrigate();
-                cuadriculaIA.depositarBarco(3, 3, barco2);
+                barco = fabricaBarcos2.crearFrigate();
+                cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
             case 3:
                 FabricaBarcos fabricaBarcos3 = new FabricaBarcos(cuadriculaIA, 3, 3, Clima.VIENTO, new EstrategiaPosicionamientoAleatorio());
-                Barco barco3 = fabricaBarcos3.crearCanoe();
-                cuadriculaIA.depositarBarco(3, 3, barco3);
+                barco = fabricaBarcos3.crearCanoe();
+                cuadriculaIA.depositarBarco(3, 3, barco);
                 break;
             default:
                 System.out.println("Opcion no valida");

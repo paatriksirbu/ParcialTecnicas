@@ -10,6 +10,9 @@ public class Barco implements IntBarco{
     private boolean golpeado;
     private CuadriculaIA cuadriculaIA;
     private int filaActual;
+
+
+
     private int columnaActual;
     private Clima clima;
     private EstrategiaPosicionamiento estrategia;
@@ -119,5 +122,13 @@ public class Barco implements IntBarco{
         }
     }
 
+
+    public int getFilaActual() {
+        return filaActual;
+    }
+
+    public int getColumnaActual() {
+        return columnaActual;
+    }
 
 }
