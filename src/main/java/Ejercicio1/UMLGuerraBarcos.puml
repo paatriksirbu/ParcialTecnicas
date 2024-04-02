@@ -1,57 +1,118 @@
 @startuml
 
-class CuadriculaIA {
-  -cuadricula: char[][]
-  -numFilas: int
-  -numColumnas: int
-  -barco: Barco
-  +depositarBarco(fila: int, columna: int, barco: Barco): void
-  +getNumFilas(): int
-  +getNumColumnas(): int
-
-}
-
-class Barco {
-  -tamano: int
-  -cuadriculaIA: CuadriculaIA
-  -filaInicial: int
-  -columnaInicial: int
-  -golpeado: boolean
-  -clima: Clima
-  -estrategia: EstrategiaPosicionamiento
-  +Barco(taman: int, cuadriculaIA: CuadriculaIA, filaInicial: int, columnaInicial: int, clima: Clima, estrategia: EstrategiaPosicionamiento)
-  +moverBarco(): void
+enum Orientacion {
+    HORIZONTAL
+    VERTICAL
 }
 
 enum Clima {
-  CALMA
-  TSUNAMI
-  TORMENTA
-  VIENTO_FUERTE
+    CALMA
+    TSUNAMI
+    VIENTO
+    TORMENTA
+}
+
+interface IntBarco {
+    void moverBarco()
+    boolean disparar(int fila, int columna)
+}
+
+abstract class Barco {
+    - int tamano
+    - boolean golpeado
+    - CuadriculaIA cuadriculaIA
+    - int filaActual
+    - int columnaActual
+    - Clima clima
+    - EstrategiaPosicionamiento estrategia
+    - int seccionesGolpeadas
+    - int resistencia
+    - Orientacion orientacion
+    - boolean hundido
+    + void moverBarco()
+    + boolean disparar(int fila, int columna)
+    + int getResistencia()
+}
+
+class Frigate {
+    + boolean disparar(int fila, int columna)
+}
+
+class Canoe {
+    + boolean disparar(int fila, int columna)
+}
+
+class Battleship {
+    - boolean[] seccionesAisladas
+    + void tocarSeccionAislada(int seccion)
+    + boolean disparar(int fila, int columna)
+    + int getResistencia()
+    + boolean[] getSeccionesAisladas()
+}
+
+class CuadriculaIA {
+    - char[][] cuadricula
+    - int numFilas
+    - int numColumnas
+    - Barco barco
+    + static void mostrarTablero(CuadriculaIA cuadriculaIA)
+    + void depositarBarco(int fila, int columna, Barco barco)
+    + char[][] getCuadricula()
+    + int getNumFilas()
+    + int getNumColumnas()
+    + Barco getBarco()
+}
+
+interface FabricaBarcosInt {
+    Barco crearBattleship()
+    Barco crearFrigate()
+    Barco crearCanoe()
+}
+
+class FabricaBarcos implements FabricaBarcosInt {
+    - CuadriculaIA cuadriculaIA
+    - int filaInicial
+    - int columnaInicial
+    - Clima clima
+    - EstrategiaPosicionamiento estrategia
+    + Barco crearBattleship()
+    + Barco crearFrigate()
+    + Barco crearCanoe()
 }
 
 interface EstrategiaPosicionamiento {
-  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+    void posicionarBarco(CuadriculaIA cuadricula, Barco barco)
 }
 
-class EstrategiaPosicionamientoAleatorio {
-  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+class EstrategiaPosicionamientoEsquina implements EstrategiaPosicionamiento {
+    + void posicionarBarco(CuadriculaIA cuadricula, Barco barco)
 }
 
-class EstrategiaPosicionamientoCentro {
-  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+class EstrategiaPosicionamientoAleatorio implements EstrategiaPosicionamiento {
+    + void posicionarBarco(CuadriculaIA cuadricula, Barco barco)
 }
 
-class EstrategiaPosicionamientoEsquina {
-  +posicionarBarco(cuadricula: CuadriculaIA, barco: Barco): void
+class EstrategiaPosicionamientoCentro implements EstrategiaPosicionamiento {
+    + void posicionarBarco(CuadriculaIA cuadricula, Barco barco)
 }
 
-Barco --|> IntBarco
-Barco -right- Clima
-Barco -down- EstrategiaPosicionamiento
-CuadriculaIA -left- Barco
-EstrategiaPosicionamientoAleatorio .up.|> EstrategiaPosicionamiento
-EstrategiaPosicionamientoCentro .up.|> EstrategiaPosicionamiento
-EstrategiaPosicionamientoEsquina .up.|> EstrategiaPosicionamiento
+class EstrategiaPosicionamientoConsecutivo implements EstrategiaPosicionamiento {
+    + void posicionarBarco(CuadriculaIA cuadricula, Barco barco)
+}
+
+Barco <|-- Frigate
+Barco <|-- Canoe
+Barco <|-- Battleship
+Barco ..> Clima
+Barco ..> Orientacion
+Barco ..> EstrategiaPosicionamiento
+Barco -- CuadriculaIA
+CuadriculaIA -- Barco
+IntBarco <|.. Barco
+FabricaBarcosInt <|.. FabricaBarcos
+EstrategiaPosicionamiento <|.. EstrategiaPosicionamientoEsquina
+EstrategiaPosicionamiento <|.. EstrategiaPosicionamientoAleatorio
+EstrategiaPosicionamiento <|.. EstrategiaPosicionamientoCentro
+EstrategiaPosicionamiento <|.. EstrategiaPosicionamientoConsecutivo
 
 @enduml

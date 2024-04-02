@@ -46,5 +46,7 @@ public class Battleship extends Barco {
         return getTamano();
     }
 
-
+    public boolean[] getSeccionesAisladas() {
+        return seccionesAisladas;
+    }
 }
