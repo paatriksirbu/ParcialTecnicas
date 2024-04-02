@@ -5,6 +5,7 @@ import Ejercicio1.Cuadricula.CuadriculaIA;
 import Ejercicio1.EstrategiaPosicionamiento.*;
 import Ejercicio1.Factory.FabricaBarcos;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class GuerraBarcos {
@@ -18,30 +19,50 @@ public class GuerraBarcos {
         CuadriculaIA.mostrarTablero(cuadriculaIA1);
         CuadriculaIA.mostrarTablero(cuadriculaIA2);
 
+        System.out.println("Creando jugador 1...");
         Barco barco1 = crearBarcoJugador(cuadriculaIA1);
+        System.out.println("Creando jugador 2...");
         Barco barco2 = crearBarcoJugador(cuadriculaIA2);
 
         //Creamos un barco y lo depositamos en el tablero
         System.out.println("\nTablero con barco");
         CuadriculaIA.mostrarTablero(cuadriculaIA1);
 
+        boolean esTurnoJugador1 = true;
+        Random rand = new Random();
+
         while(true){    //Bucle que mueve el barco por el tablero simulando que hay corrientes marinas. Se mueve cada 2 segundos.
-            barco.moverBarco();
-            CuadriculaIA.mostrarTablero(cuadriculaIA);
+            Barco barcoActual = esTurnoJugador1 ? barco1 : barco2;
+            CuadriculaIA cuadriculaActual = esTurnoJugador1 ? cuadriculaIA1 : cuadriculaIA2;
+
+            barcoActual.moverBarco();
+            CuadriculaIA.mostrarTablero(cuadriculaActual);
             Thread.sleep(2500);
 
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Introduzca la fila para disparar: ");
-            int fila = sc.nextInt();
-            System.out.println("Introduzca la columna para disparar: ");
-            int columna = sc.nextInt();
-            boolean hundido = barco.disparar(fila, columna);
+            int fila, columna;
+            if (esTurnoJugador1){
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Jugador 1, introduzca la fila para disparar: ");
+                fila = sc.nextInt();
+                System.out.println("Jugador 1, introduzca la columna para disparar: ");
+                columna = sc.nextInt();
+            } else {
+                fila = rand.nextInt(cuadriculaActual.getNumFilas());
+                columna = rand.nextInt(cuadriculaActual.getNumColumnas());
+                System.out.println("Jugador 2 ha disparado en la fila " + fila + " y columna " + columna);
+            }
+
+            boolean hundido = barcoActual.disparar(fila, columna);
 
             if (hundido){
-                System.out.println("¡Has conseguido hundir el barco!");
+                System.out.println("¡Jugador 1 ha conseguido hundir el barco!");
                 break;
             }
+
+            esTurnoJugador1 = !esTurnoJugador1;
         }
+        String ganador = getGanador(barco1, barco2);
+        System.out.println("El ganador es: " + ganador);
     }
 
     private static Barco crearBarcoJugador(CuadriculaIA cuadriculaIA){
@@ -75,9 +96,19 @@ public class GuerraBarcos {
 
         if (barco == null){
             System.out.println("No se ha creado ningun barco");
-            return;
+            return null;
         }
         return barco;
+    }
+
+    public static String getGanador(Barco barco1, Barco barco2){
+        if(barco1.estaHundido()){
+            return "Jugador 2";
+        } else if(barco2.estaHundido()){
+            return "Jugador 1";
+        } else {
+            return "Empate";
+        }
     }
 
 }

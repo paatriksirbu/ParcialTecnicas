@@ -18,6 +18,7 @@ public abstract class Barco implements IntBarco{
     private int seccionesGolpeadas = 0;
     private int resistencia;
     private Orientacion orientacion;
+    private boolean hundido = false;
 
 
     public Barco(int tamano, CuadriculaIA cuadriculaIA, int filaInicial, int columnaInicial, Clima clima, EstrategiaPosicionamiento estrategia) {
@@ -150,5 +151,12 @@ public abstract class Barco implements IntBarco{
 
     public void setOrientacion(Orientacion orientacion){
         this.orientacion = orientacion;
+    }
+    public boolean estaHundido(){
+        return hundido;
+    }
+
+    public void hundir(){
+        this.hundido = true;
     }
 }
