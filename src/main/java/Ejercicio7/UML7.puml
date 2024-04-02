@@ -1,0 +1,31 @@
+@startuml
+
+class Barco {
+    - int numero
+    - int nivel
+    - String nombre
+    - String tipo
+
+    + Barco(int numero, int nivel, String nombre, String tipo)
+    + int getNumero()
+    + void setNumero(int numero)
+    + int getNivel()
+    + void setNivel(int nivel)
+    + String getNombre()
+    + void setNombre(String nombre)
+    + String getTipo()
+    + void setTipo(String tipo)
+}
+
+class Main {
+    - static HashMap<String, HashMap<String, Barco>> hashTipoBarco
+    - static HashMap<String, Barco> hashNumeroBarco
+    - static HashMap<String, Barco> hashNombreBarco
+
+    + static void cargarBarco(int numero, String nombre, String tipo, int nivel)
+    + static void main(String[] args)
+}
+
+Main ..> Barco : creates
+
+@enduml
