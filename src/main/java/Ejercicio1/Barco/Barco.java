@@ -2,10 +2,11 @@ package Ejercicio1.Barco;
 
 import Ejercicio1.Cuadricula.CuadriculaIA;
 import Ejercicio1.EstrategiaPosicionamiento.EstrategiaPosicionamiento;
+import Ejercicio1.Barco.Orientacion;
 
 import java.util.Random;
 
-public class Barco implements IntBarco{
+public abstract class Barco implements IntBarco{
     private int tamano;
     private boolean golpeado;
     private CuadriculaIA cuadriculaIA;
@@ -145,5 +146,9 @@ public class Barco implements IntBarco{
 
     public Orientacion getOrientacion() {
         return orientacion;
+    }
+
+    public void setOrientacion(Orientacion orientacion){
+        this.orientacion = orientacion;
     }
 }
