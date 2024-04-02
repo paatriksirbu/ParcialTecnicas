@@ -41,5 +41,10 @@ public class Battleship extends Barco {
         return false;
     }
 
+    @Override
+    public int getResistencia() {   //Solo se hunde cuando todas sus secciones son golpeadas.
+        return getTamano();
+    }
+
 
 }
