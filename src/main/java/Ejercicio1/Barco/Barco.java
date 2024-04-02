@@ -11,11 +11,11 @@ public class Barco implements IntBarco{
     private CuadriculaIA cuadriculaIA;
     private int filaActual;
 
-
-
     private int columnaActual;
     private Clima clima;
     private EstrategiaPosicionamiento estrategia;
+    private int seccionesGolpeadas = 0;
+    private int resistencia;
 
 
     public Barco(int tamano, CuadriculaIA cuadriculaIA, int filaInicial, int columnaInicial, Clima clima, EstrategiaPosicionamiento estrategia) {
@@ -27,6 +27,10 @@ public class Barco implements IntBarco{
         this.clima = clima;
         this.estrategia = estrategia;
         estrategia.posicionarBarco(cuadriculaIA, this);
+    }
+
+    public int getResistencia() {
+        return 1;
     }
 
     public int getTamano() {
@@ -114,8 +118,15 @@ public class Barco implements IntBarco{
             return false;
         } else if (cuadriculaIA.getCuadricula()[fila][columna] == 'B') {
             cuadriculaIA.getCuadricula()[fila][columna] = 'X';
-            System.out.println("¡Barco hundido!");
-            return true;
+            seccionesGolpeadas++;
+            if(seccionesGolpeadas >= getResistencia()){
+                System.out.println("¡Barco hundido!");
+                return true;
+            } else {
+                System.out.println("¡Has golpeado una seccion del barco!");
+                return false;
+            }
+
         } else {
             System.out.println("Disparo fallido");
             return false;

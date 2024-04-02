@@ -10,6 +10,13 @@ public class EstrategiaPosicionamientoConsecutivo implements EstrategiaPosiciona
         int columnaInicial = barco.getColumnaActual();
         int tamano = barco.getTamano();
 
+        //Verificamos que el barco cabe en la fila desde su posicion inicial, si no cabe, lo movemos a la siguiente fila
+        if (columnaInicial + tamano > cuadricula.getNumColumnas()) {
+            filaInicial++;
+            columnaInicial = 0;
+        }
+
+
         for(int i = 0; i < tamano; i++) {
             cuadricula.getCuadricula()[filaInicial][columnaInicial + i] = 'B';
         }
